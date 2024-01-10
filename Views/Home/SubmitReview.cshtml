@@ -1,0 +1,61 @@
+﻿@model Film.Models.Incelemeler
+@using (Html.BeginForm("ADdReview", "Home"))
+{
+    @Html.AntiForgeryToken()
+
+    <script>
+        window.onload = function () {
+            var filmId = getUrlParameter('filmId');
+            document.getElementById('film_id').value = filmId;
+        };
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+    </script>
+
+
+    <div class="container">
+        <h4 class="mt-4 mb-3">Create Reviews</h4>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.inceleme_metni, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.inceleme_metni, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.inceleme_metni, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(model => model.yildiz_puani, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.yildiz_puani, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @max = "5" } })
+                @Html.ValidationMessageFor(model => model.yildiz_puani, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.film_id, new { @id = "film_id" })
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="container mt-3">
+    @Html.ActionLink("Back To Movies", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

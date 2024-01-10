@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="yettiModelStoreContainer" CdmEntityContainer="yettiEntities">
+    <EntitySetMapping Name="Filmlers">
+      <EntityTypeMapping TypeName="yettiModel.Filmler">
+        <MappingFragment StoreEntitySet="Filmler">
+          <ScalarProperty Name="film_id" ColumnName="film_id" />
+          <ScalarProperty Name="baslik" ColumnName="baslik" />
+          <ScalarProperty Name="yonetmen" ColumnName="yonetmen" />
+          <ScalarProperty Name="kategori" ColumnName="kategori" />
+          <ScalarProperty Name="yayin_tarihi" ColumnName="yayin_tarihi" />
+          <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+          <ScalarProperty Name="ortalama_puan" ColumnName="ortalama_puan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Incelemelers">
+      <EntityTypeMapping TypeName="yettiModel.Incelemeler">
+        <MappingFragment StoreEntitySet="Incelemeler">
+          <ScalarProperty Name="inceleme_id" ColumnName="inceleme_id" />
+          <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+          <ScalarProperty Name="film_id" ColumnName="film_id" />
+          <ScalarProperty Name="inceleme_metni" ColumnName="inceleme_metni" />
+          <ScalarProperty Name="yildiz_puani" ColumnName="yildiz_puani" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kullanici_Favorileri">
+      <EntityTypeMapping TypeName="yettiModel.Kullanici_Favorileri">
+        <MappingFragment StoreEntitySet="Kullanici_Favorileri">
+          <ScalarProperty Name="favori_id" ColumnName="favori_id" />
+          <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+          <ScalarProperty Name="film_id" ColumnName="film_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kullanicilars">
+      <EntityTypeMapping TypeName="yettiModel.Kullanicilar">
+        <MappingFragment StoreEntitySet="Kullanicilar">
+          <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+          <ScalarProperty Name="ad" ColumnName="ad" />
+          <ScalarProperty Name="e_posta" ColumnName="e_posta" />
+          <ScalarProperty Name="sifre_hash" ColumnName="sifre_hash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

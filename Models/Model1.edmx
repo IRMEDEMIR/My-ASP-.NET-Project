@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="tavsanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Filmler">
+          <Key>
+            <PropertyRef Name="film_id" />
+          </Key>
+          <Property Name="film_id" Type="int" Nullable="false" />
+          <Property Name="baslik" Type="nvarchar" MaxLength="100" />
+          <Property Name="yonetmen" Type="nvarchar" MaxLength="50" />
+          <Property Name="kategori" Type="nvarchar" MaxLength="50" />
+          <Property Name="yayin_tarihi" Type="date" />
+          <Property Name="aciklama" Type="nvarchar(max)" />
+          <Property Name="ortalama_puan" Type="decimal" Precision="3" Scale="1" />
+        </EntityType>
+        <EntityType Name="Incelemeler">
+          <Key>
+            <PropertyRef Name="inceleme_id" />
+          </Key>
+          <Property Name="inceleme_id" Type="int" Nullable="false" />
+          <Property Name="kullanici_id" Type="int" />
+          <Property Name="film_id" Type="int" />
+          <Property Name="inceleme_metni" Type="nvarchar(max)" />
+          <Property Name="yildiz_puani" Type="int" />
+          <Property Name="tarih" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Kullanici_Favorileri">
+          <Key>
+            <PropertyRef Name="favori_id" />
+          </Key>
+          <Property Name="favori_id" Type="int" Nullable="false" />
+          <Property Name="kullanici_id" Type="int" />
+          <Property Name="film_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="kullanici_id" />
+          </Key>
+          <Property Name="kullanici_id" Type="int" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="e_posta" Type="nvarchar" MaxLength="100" />
+          <Property Name="sifre_hash" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Incelemel__film___3C69FB99">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Incelemeler" Type="Self.Incelemeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="film_id" />
+            </Principal>
+            <Dependent Role="Incelemeler">
+              <PropertyRef Name="film_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incelemel__kulla__3B75D760">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Incelemeler" Type="Self.Incelemeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="kullanici_id" />
+            </Principal>
+            <Dependent Role="Incelemeler">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kullanici__film___403A8C7D">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Kullanici_Favorileri" Type="Self.Kullanici_Favorileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="film_id" />
+            </Principal>
+            <Dependent Role="Kullanici_Favorileri">
+              <PropertyRef Name="film_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kullanici__kulla__3F466844">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Kullanici_Favorileri" Type="Self.Kullanici_Favorileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="kullanici_id" />
+            </Principal>
+            <Dependent Role="Kullanici_Favorileri">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tavsanModelStoreContainer">
+          <EntitySet Name="Filmler" EntityType="Self.Filmler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incelemeler" EntityType="Self.Incelemeler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici_Favorileri" EntityType="Self.Kullanici_Favorileri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Incelemel__film___3C69FB99" Association="Self.FK__Incelemel__film___3C69FB99">
+            <End Role="Filmler" EntitySet="Filmler" />
+            <End Role="Incelemeler" EntitySet="Incelemeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incelemel__kulla__3B75D760" Association="Self.FK__Incelemel__kulla__3B75D760">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Incelemeler" EntitySet="Incelemeler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kullanici__film___403A8C7D" Association="Self.FK__Kullanici__film___403A8C7D">
+            <End Role="Filmler" EntitySet="Filmler" />
+            <End Role="Kullanici_Favorileri" EntitySet="Kullanici_Favorileri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kullanici__kulla__3F466844" Association="Self.FK__Kullanici__kulla__3F466844">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Kullanici_Favorileri" EntitySet="Kullanici_Favorileri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tavsanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Filmler">
+          <Key>
+            <PropertyRef Name="film_id" />
+          </Key>
+          <Property Name="film_id" Type="Int32" Nullable="false" />
+          <Property Name="baslik" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="yonetmen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kategori" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yayin_tarihi" Type="DateTime" Precision="0" />
+          <Property Name="aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ortalama_puan" Type="Decimal" Precision="3" Scale="1" />
+          <NavigationProperty Name="Incelemelers" Relationship="Self.FK__Incelemel__film___3C69FB99" FromRole="Filmler" ToRole="Incelemeler" />
+          <NavigationProperty Name="Kullanici_Favorileri" Relationship="Self.FK__Kullanici__film___403A8C7D" FromRole="Filmler" ToRole="Kullanici_Favorileri" />
+        </EntityType>
+        <EntityType Name="Incelemeler">
+          <Key>
+            <PropertyRef Name="inceleme_id" />
+          </Key>
+          <Property Name="inceleme_id" Type="Int32" Nullable="false" />
+          <Property Name="kullanici_id" Type="Int32" />
+          <Property Name="film_id" Type="Int32" />
+          <Property Name="inceleme_metni" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="yildiz_puani" Type="Int32" />
+          <Property Name="tarih" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Filmler" Relationship="Self.FK__Incelemel__film___3C69FB99" FromRole="Incelemeler" ToRole="Filmler" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Self.FK__Incelemel__kulla__3B75D760" FromRole="Incelemeler" ToRole="Kullanicilar" />
+        </EntityType>
+        <EntityType Name="Kullanici_Favorileri">
+          <Key>
+            <PropertyRef Name="favori_id" />
+          </Key>
+          <Property Name="favori_id" Type="Int32" Nullable="false" />
+          <Property Name="kullanici_id" Type="Int32" />
+          <Property Name="film_id" Type="Int32" />
+          <NavigationProperty Name="Filmler" Relationship="Self.FK__Kullanici__film___403A8C7D" FromRole="Kullanici_Favorileri" ToRole="Filmler" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Self.FK__Kullanici__kulla__3F466844" FromRole="Kullanici_Favorileri" ToRole="Kullanicilar" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="kullanici_id" />
+          </Key>
+          <Property Name="kullanici_id" Type="Int32" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="e_posta" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sifre_hash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incelemelers" Relationship="Self.FK__Incelemel__kulla__3B75D760" FromRole="Kullanicilar" ToRole="Incelemeler" />
+          <NavigationProperty Name="Kullanici_Favorileri" Relationship="Self.FK__Kullanici__kulla__3F466844" FromRole="Kullanicilar" ToRole="Kullanici_Favorileri" />
+        </EntityType>
+        <Association Name="FK__Incelemel__film___3C69FB99">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Incelemeler" Type="Self.Incelemeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="film_id" />
+            </Principal>
+            <Dependent Role="Incelemeler">
+              <PropertyRef Name="film_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kullanici__film___403A8C7D">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Kullanici_Favorileri" Type="Self.Kullanici_Favorileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="film_id" />
+            </Principal>
+            <Dependent Role="Kullanici_Favorileri">
+              <PropertyRef Name="film_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incelemel__kulla__3B75D760">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Incelemeler" Type="Self.Incelemeler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="kullanici_id" />
+            </Principal>
+            <Dependent Role="Incelemeler">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kullanici__kulla__3F466844">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Kullanici_Favorileri" Type="Self.Kullanici_Favorileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="kullanici_id" />
+            </Principal>
+            <Dependent Role="Kullanici_Favorileri">
+              <PropertyRef Name="kullanici_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tavsanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Filmlers" EntityType="Self.Filmler" />
+          <EntitySet Name="Incelemelers" EntityType="Self.Incelemeler" />
+          <EntitySet Name="Kullanici_Favorileri" EntityType="Self.Kullanici_Favorileri" />
+          <EntitySet Name="Kullanicilars" EntityType="Self.Kullanicilar" />
+          <AssociationSet Name="FK__Incelemel__film___3C69FB99" Association="Self.FK__Incelemel__film___3C69FB99">
+            <End Role="Filmler" EntitySet="Filmlers" />
+            <End Role="Incelemeler" EntitySet="Incelemelers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kullanici__film___403A8C7D" Association="Self.FK__Kullanici__film___403A8C7D">
+            <End Role="Filmler" EntitySet="Filmlers" />
+            <End Role="Kullanici_Favorileri" EntitySet="Kullanici_Favorileri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incelemel__kulla__3B75D760" Association="Self.FK__Incelemel__kulla__3B75D760">
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
+            <End Role="Incelemeler" EntitySet="Incelemelers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kullanici__kulla__3F466844" Association="Self.FK__Kullanici__kulla__3F466844">
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
+            <End Role="Kullanici_Favorileri" EntitySet="Kullanici_Favorileri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tavsanModelStoreContainer" CdmEntityContainer="tavsanEntities">
+          <EntitySetMapping Name="Filmlers">
+            <EntityTypeMapping TypeName="tavsanModel.Filmler">
+              <MappingFragment StoreEntitySet="Filmler">
+                <ScalarProperty Name="film_id" ColumnName="film_id" />
+                <ScalarProperty Name="baslik" ColumnName="baslik" />
+                <ScalarProperty Name="yonetmen" ColumnName="yonetmen" />
+                <ScalarProperty Name="kategori" ColumnName="kategori" />
+                <ScalarProperty Name="yayin_tarihi" ColumnName="yayin_tarihi" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+                <ScalarProperty Name="ortalama_puan" ColumnName="ortalama_puan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incelemelers">
+            <EntityTypeMapping TypeName="tavsanModel.Incelemeler">
+              <MappingFragment StoreEntitySet="Incelemeler">
+                <ScalarProperty Name="inceleme_id" ColumnName="inceleme_id" />
+                <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+                <ScalarProperty Name="film_id" ColumnName="film_id" />
+                <ScalarProperty Name="inceleme_metni" ColumnName="inceleme_metni" />
+                <ScalarProperty Name="yildiz_puani" ColumnName="yildiz_puani" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici_Favorileri">
+            <EntityTypeMapping TypeName="tavsanModel.Kullanici_Favorileri">
+              <MappingFragment StoreEntitySet="Kullanici_Favorileri">
+                <ScalarProperty Name="favori_id" ColumnName="favori_id" />
+                <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+                <ScalarProperty Name="film_id" ColumnName="film_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilars">
+            <EntityTypeMapping TypeName="tavsanModel.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="kullanici_id" ColumnName="kullanici_id" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="e_posta" ColumnName="e_posta" />
+                <ScalarProperty Name="sifre_hash" ColumnName="sifre_hash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

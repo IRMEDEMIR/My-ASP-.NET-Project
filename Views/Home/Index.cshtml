@@ -1,0 +1,55 @@
+﻿@model List<Film.Models.Filmler>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2 class="p-3 mb-2 text-center text-uppercase">Most Popular Movies</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-4">
+                <div class="card">
+                    <img src="~/Content/images/@(item.baslik).jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title">@item.baslik</h3>
+                        <h6 class="card-title text-info">@item.kategori</h6>
+                        <p class="card-text">@item.aciklama</p>
+                        <div class="row">
+                            <h6 class="card-title text-primary">@item.ortalama_puan</h6>
+                            <a href="href=" @Url.Action("AddReview", "Home") ?filmId=@item.film_id" " class="btn btn-primary createLink" data-filmid="@item.film_id">
+                                <i class="bi bi-plus"></i> Create to reviews
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+     var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+
+     var createLinks = document.querySelectorAll('.createLink');
+
+     createLinks.forEach(function(link) {
+        link.onclick = function(event) {
+            event.preventDefault();
+
+            var filmId = this.getAttribute('data-filmid');
+            console.log("Film ID:", filmId);
+            if (isAuthenticated) {
+                window.location.href = '@Url.Action("AddReview", "Home")' + '?filmId=' + filmId;
+            } else {
+                showAlert();
+            }
+        };
+    });
+
+     function showAlert() {
+          alert('Önce giriş yapmalısınız!');
+          window.location.href = '@Url.Action("Login", "Account")';
+     }
+</script>

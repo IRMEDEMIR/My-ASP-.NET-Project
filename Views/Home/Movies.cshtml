@@ -1,0 +1,28 @@
+﻿@model IEnumerable<IGrouping<string,Film.Models.Filmler>>
+@{
+    ViewBag.Title = "Movies";
+}
+@foreach (var kategoriGrubu in Model)
+{
+    <h2 class="p-3 mb-2">@kategoriGrubu.Key</h2>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var film in kategoriGrubu)
+            {
+                <div class="col-4">
+                    <div class="card">
+                        <img src="~/Content/images/@(film.baslik).jpeg" class="card-img-top" alt="Film Resmi">
+                        <div class="card-body">
+                            <h3 class="card-title">@film.baslik</h3>
+                            <h6 class="card-title text-info">@film.yayin_tarihi</h6>
+                            <h6 class="card-title text-black-50">@film.yonetmen</h6>
+                            <p class="card-text">@film.aciklama</p>
+                            <h6 class="card-title text-primary">@film.ortalama_puan</h6>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

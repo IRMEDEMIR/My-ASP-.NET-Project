@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Film.Models.Incelemeler>
+
+@{ 
+    ViewBag.Title = "View";
+}
+
+<div class="container mt-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="m-0">USER REVIEWS</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Movie Name</th>
+                    <th>@Html.DisplayNameFor(model => model.inceleme_metni)</th>
+                    <th>@Html.DisplayNameFor(model => model.yildiz_puani)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Filmler.baslik)</td>
+                        <td>@Html.DisplayFor(modelItem => item.inceleme_metni)</td>
+                        <td>@Html.DisplayFor(modelItem => item.yildiz_puani)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
